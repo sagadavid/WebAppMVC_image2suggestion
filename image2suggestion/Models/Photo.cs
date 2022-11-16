@@ -17,7 +17,13 @@ namespace image2suggestion.Models
         //[DisplayName("Upload Name")]
         //public string Description { get; set; }
 
-        //[NotMapped]
+
+        //-The property 'Photo.File' is of an interface type ('IFormFile').
+        //If it is a navigation, manually configure the relationship for
+        //this property by casting it to a mapped entity type. Otherwise,
+        //ignore the property using the [NotMapped] attribute
+        //or 'Ignore' in 'OnModelCreating'.
+        [NotMapped]
         [DisplayName("Upload File")]
         public IFormFile File { get; set; }
 
