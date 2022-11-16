@@ -17,7 +17,7 @@ namespace image2suggestion.Models
         //[DisplayName("Upload Name")]
         //public string Description { get; set; }
 
-        [NotMapped]
+        //[NotMapped]
         [DisplayName("Upload File")]
         public IFormFile File { get; set; }
 
