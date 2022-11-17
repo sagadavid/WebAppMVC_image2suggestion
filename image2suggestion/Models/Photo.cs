@@ -8,7 +8,7 @@ namespace image2suggestion.Models
     public class Photo
     {
         [Key]
-        public int PhotoId { get; set; }
+        public int Id { get; set; }
 
         [Column(TypeName = "nvarchar(50)")]
         public string Title { get; set; }
@@ -27,7 +27,13 @@ namespace image2suggestion.Models
         [DisplayName("Upload File")]
         public IFormFile File { get; set; }
 
-        //navigation property
-        public Suggestion Suggestion { get; set; }
+        ////navigation property
+        //public Suggestion Suggestion { get; set; }
+
+        public byte[] Bytes { get; set; }
+        //public string Description { get; set; }
+        //public string FileExtension { get; set; }
+        //public decimal Size { get; set; }
+
     }
 }

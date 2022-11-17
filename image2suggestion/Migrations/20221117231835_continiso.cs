@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace image2suggestion.Data.Migrations
+namespace image2suggestion.Migrations
 {
-    public partial class kveldnatt2 : Migration
+    public partial class continiso : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

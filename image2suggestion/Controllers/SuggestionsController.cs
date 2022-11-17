@@ -34,7 +34,7 @@ namespace image2suggestion.Controllers
             }
 
             var suggestion = await _context.Suggestion
-                .FirstOrDefaultAsync(m => m.SuggestionId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (suggestion == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace image2suggestion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SuggestionId,Title,Description")] Suggestion suggestion)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description")] Suggestion suggestion)
         {
             if (ModelState.IsValid)
             {
@@ -86,9 +86,9 @@ namespace image2suggestion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SuggestionId,Title,Description")] Suggestion suggestion)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description")] Suggestion suggestion)
         {
-            if (id != suggestion.SuggestionId)
+            if (id != suggestion.Id)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace image2suggestion.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SuggestionExists(suggestion.SuggestionId))
+                    if (!SuggestionExists(suggestion.Id))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace image2suggestion.Controllers
             }
 
             var suggestion = await _context.Suggestion
-                .FirstOrDefaultAsync(m => m.SuggestionId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (suggestion == null)
             {
                 return NotFound();
@@ -155,7 +155,7 @@ namespace image2suggestion.Controllers
 
         private bool SuggestionExists(int id)
         {
-          return _context.Suggestion.Any(e => e.SuggestionId == id);
+          return _context.Suggestion.Any(e => e.Id == id);
         }
     }
 }

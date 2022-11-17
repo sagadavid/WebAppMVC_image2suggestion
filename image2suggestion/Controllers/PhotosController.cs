@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using image2suggestion.Data;
 using image2suggestion.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace image2suggestion.Controllers
 {
@@ -38,7 +39,7 @@ namespace image2suggestion.Controllers
             }
 
             var imageModel = await _context.Photo
-                .FirstOrDefaultAsync(m => m.PhotoId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (imageModel == null)
             {
                 return NotFound();
@@ -59,7 +60,7 @@ namespace image2suggestion.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PhotoId,Title,File")] Photo photo)
+        public async Task<IActionResult> Create([Bind("Id,Title,File")] Photo photo)
         {
             if (ModelState.IsValid)
             {
@@ -77,8 +78,13 @@ namespace image2suggestion.Controllers
                     await photo.File.CopyToAsync(fileStream);
                 }
 
-                //insert record
-                _context.Add(photo);
+                using (var memoryStream = new MemoryStream())
+                {
+                    await photo.File.CopyToAsync(memoryStream);
+                }
+                    //insert record
+                    //await AddPicture(photo);
+                    _context.Add(photo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -106,9 +112,9 @@ namespace image2suggestion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PhotoId,Title,File")] Photo photo)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,File")] Photo photo)
         {
-            if (id != photo.PhotoId)
+            if (id != photo.Id)
             {
                 return NotFound();
             }
@@ -122,7 +128,7 @@ namespace image2suggestion.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ImageModelExists(photo.PhotoId))
+                    if (!ImageModelExists(photo.Id))
                     {
                         return NotFound();
                     }
@@ -145,7 +151,7 @@ namespace image2suggestion.Controllers
             }
 
             var imageModel = await _context.Photo
-                .FirstOrDefaultAsync(m => m.PhotoId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (imageModel == null)
             {
                 return NotFound();
@@ -165,7 +171,7 @@ namespace image2suggestion.Controllers
             }
             var photo = await _context.Photo.FindAsync(id);
 
-            if ( photo!= null)
+            if (photo != null)
             {
                 _context.Photo.Remove(photo);
             }
@@ -181,7 +187,36 @@ namespace image2suggestion.Controllers
 
         private bool ImageModelExists(int id)
         {
-            return _context.Photo.Any(e => e.PhotoId == id);
+            return _context.Photo.Any(e => e.Id == id);
         }
+
+        //private async Task AddPicture(Photo photo)
+        //{
+        //    if (photo.File.Length > 0)
+        //    {
+        //        using (var memoryStream = new MemoryStream())
+        //        {
+        //            await photo.File.CopyToAsync(memoryStream);
+                   
+
+        //           // Upload the file if less than 2 MB
+        //            if (memoryStream.Length < 2097152)
+        //            {
+        //                //based on the upload file to create Photo instance.
+        //                //You can also check the database, whether the image exists in the database.
+        //                var newphoto = new Photo()
+        //                {
+        //                    Bytes = memoryStream.ToArray(),
+        //                };
+        //                //add the photo instance to the list.
+        //                _context.Add(photo);
+        //            }
+        //            else
+        //            {
+        //                ModelState.AddModelError("File", "The file is too large.");
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

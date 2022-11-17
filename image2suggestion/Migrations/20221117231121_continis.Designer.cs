@@ -9,11 +9,11 @@ using image2suggestion.Data;
 
 #nullable disable
 
-namespace image2suggestion.Data.Migrations
+namespace image2suggestion.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221116194020_kveldnatt2")]
-    partial class kveldnatt2
+    [Migration("20221117231121_continis")]
+    partial class continis
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,32 +26,30 @@ namespace image2suggestion.Data.Migrations
 
             modelBuilder.Entity("image2suggestion.Models.Photo", b =>
                 {
-                    b.Property<int>("PhotoId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhotoId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("SuggestionId")
-                        .HasColumnType("int");
+                    b.Property<byte[]>("Bytes")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("PhotoId");
-
-                    b.HasIndex("SuggestionId");
+                    b.HasKey("Id");
 
                     b.ToTable("Photo");
                 });
 
             modelBuilder.Entity("image2suggestion.Models.Suggestion", b =>
                 {
-                    b.Property<int>("SuggestionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SuggestionId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -63,7 +61,7 @@ namespace image2suggestion.Data.Migrations
                         .HasMaxLength(70)
                         .HasColumnType("nvarchar(70)");
 
-                    b.HasKey("SuggestionId");
+                    b.HasKey("Id");
 
                     b.ToTable("Suggestion");
                 });
@@ -268,15 +266,6 @@ namespace image2suggestion.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("image2suggestion.Models.Photo", b =>
-                {
-                    b.HasOne("image2suggestion.Models.Suggestion", "Suggestion")
-                        .WithMany()
-                        .HasForeignKey("SuggestionId");
-
-                    b.Navigation("Suggestion");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
