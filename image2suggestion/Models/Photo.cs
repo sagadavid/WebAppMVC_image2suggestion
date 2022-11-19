@@ -10,6 +10,7 @@ namespace image2suggestion.Models
         [Key]
         public int Id { get; set; }
 
+        //[Required(ErrorMessage = "title your photo")]
         [Column(TypeName = "nvarchar(50)")]
         public string Title { get; set; }
 
@@ -19,11 +20,12 @@ namespace image2suggestion.Models
         //ignore the property using the [NotMapped] attribute
         //or 'Ignore' in 'OnModelCreating'.
         [NotMapped]
-        [DisplayName("Upload PhotoInIForm")]
+        [DisplayName("Upload Photo")]
         public IFormFile PhotoInIForm { get; set; }
 
         public byte[] PhotoInBytes { get; set; }
-        
+
+        //[Required(ErrorMessage = "select relevant suggestion please")]
         public int SuggestionID { get; set; }
         public Suggestion Suggestion { get; set; }
 

@@ -13,10 +13,12 @@ namespace image2suggestion.Controllers
     public class PhotosController : Controller
     {
         private readonly PhotoDbContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public PhotosController(PhotoDbContext context)
+        public PhotosController(PhotoDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment; 
         }
 
         // GET: Photos
@@ -57,10 +59,35 @@ namespace image2suggestion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,PhotoInBytes,SuggestionID")] Photo photo)
+        public async Task<IActionResult> Create([Bind("Id,Title,PhotoInIForm, PhotoInBytes,SuggestionID")] Photo photo)
         {
             if (ModelState.IsValid)
             {
+                //save image to wwwroot/image
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                string fileName = Path.GetFileNameWithoutExtension(photo.PhotoInIForm.FileName);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                string fileExtension = Path.GetExtension(photo.PhotoInIForm.FileName);
+                photo.Title = fileName = DateTime.Now.ToString("yyyyMddHHmmss_") + fileName + fileExtension;
+                string path = Path.Combine(wwwRootPath + "/Image/" + fileName);
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await photo.PhotoInIForm.CopyToAsync(fileStream);
+                }
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    await photo.PhotoInIForm.CopyToAsync(memoryStream);
+                    //MemoryStreamToKilobyte();
+                    //compress or recalculate as kb or mb and assign to photoinbytes afterwards !!!!
+                    photo.PhotoInBytes = memoryStream.ToArray();//need to save as kb???
+
+                }
+
+
+                //insert record
                 _context.Add(photo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
