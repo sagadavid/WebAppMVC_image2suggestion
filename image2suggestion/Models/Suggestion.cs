@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace image2suggestion.Models
 {
     public class Suggestion
     {
+        [Key]
         public int Id { get; set; }
 
         //[RegularExpression(@"^[A-Z0-9]+[a-zA-Z0-9""'\s-]*$", ErrorMessage = "Title should begin with uppercase and should not contain special character")]
@@ -15,6 +17,6 @@ namespace image2suggestion.Models
         [Required]
         public string Description { get; set; }
 
-
+        public ICollection<Photo> Photos { get; set; } = new HashSet<Photo>();
     }
 }

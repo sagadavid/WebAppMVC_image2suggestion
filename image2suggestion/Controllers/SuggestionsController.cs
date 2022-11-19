@@ -12,9 +12,9 @@ namespace image2suggestion.Controllers
 {
     public class SuggestionsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly PhotoDbContext _context;
 
-        public SuggestionsController(ApplicationDbContext context)
+        public SuggestionsController(PhotoDbContext context)
         {
             _context = context;
         }
@@ -141,7 +141,7 @@ namespace image2suggestion.Controllers
         {
             if (_context.Suggestion == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Suggestion'  is null.");
+                return Problem("Entity set 'PhotoDbContext.Suggestion'  is null.");
             }
             var suggestion = await _context.Suggestion.FindAsync(id);
             if (suggestion != null)
