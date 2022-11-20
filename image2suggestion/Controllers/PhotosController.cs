@@ -14,6 +14,7 @@ namespace image2suggestion.Controllers
     {
         private readonly PhotoDbContext _context;
         private readonly IWebHostEnvironment _hostEnvironment;
+       
 
         public PhotosController(PhotoDbContext context, IWebHostEnvironment hostEnvironment)
         {
@@ -59,7 +60,7 @@ namespace image2suggestion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,PhotoInIForm, PhotoInBytes,SuggestionID")] Photo photo)
+        public async Task<IActionResult> Create([Bind("Id,Title,PhotoInIForm, SuggestionID")] Photo photo)
         {
             if (ModelState.IsValid)
             {
@@ -75,16 +76,21 @@ namespace image2suggestion.Controllers
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
                     await photo.PhotoInIForm.CopyToAsync(fileStream);
+                  
                 }
 
-                using (var memoryStream = new MemoryStream())
-                {
-                    await photo.PhotoInIForm.CopyToAsync(memoryStream);
-                    //MemoryStreamToKilobyte();
-                    //compress or recalculate as kb or mb and assign to photoinbytes afterwards !!!!
-                    photo.PhotoInBytes = memoryStream.ToArray();//need to save as kb???
+                //using (var memoryStream = new MemoryStream())
+                //{
+                 
+                //    await photo.PhotoInIForm.CopyToAsync(memoryStream);
+                //    photo.PhotoInBytes = memoryStream.ToArray();//need to save as kb?
+                //    var convLong = BitConverter.ToInt64(photo.PhotoInBytes, 0);
+                //    //var convKb = convLong / 1024;
+                //    Decimal fileSizeInMB = Convert.ToDecimal(convLong);
+                //        /// (1024.0m * 1024.0m);
+                //    photo.DisplaySize = fileSizeInMB;
 
-                }
+                //}
 
 
                 //insert record
@@ -186,6 +192,9 @@ namespace image2suggestion.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+
+        //Console.WriteLine(SizeSuffix(100005000L));
 
         private bool PhotoExists(int id)
         {

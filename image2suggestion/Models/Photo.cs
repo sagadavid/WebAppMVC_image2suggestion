@@ -23,7 +23,13 @@ namespace image2suggestion.Models
         [DisplayName("Upload Photo")]
         public IFormFile PhotoInIForm { get; set; }
 
-        public byte[] PhotoInBytes { get; set; }
+
+        //[NotMapped]
+        //[DisplayName("Size in MB")]
+        //public decimal DisplaySize { get; set; }
+        
+        //[NotMapped]
+        //public byte[] PhotoInBytes { get; set; }
 
         //[Required(ErrorMessage = "select relevant suggestion please")]
         public int SuggestionID { get; set; }

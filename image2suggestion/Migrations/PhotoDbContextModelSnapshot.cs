@@ -30,9 +30,6 @@ namespace image2suggestion.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<byte[]>("PhotoInBytes")
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<int>("SuggestionID")
                         .HasColumnType("int");
 
