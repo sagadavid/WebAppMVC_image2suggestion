@@ -29,11 +29,15 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Suggestion.Description)
         </dd>
+        <dd class="col-sm-10">
+            <img src="@("~/image/"+Model.Title)" asp-append-version="true" width="300px" height="250px" />
+        </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <br/>
         <a asp-action="Index">Back to List</a>
     </form>
 </div>

@@ -34,7 +34,7 @@
                 @Html.DisplayFor(modelItem => item.PhotoInBytes)
             </td>*@
             <td>
-                @Html.DisplayFor(modelItem => item.Suggestion.Description)
+                @Html.DisplayFor(modelItem => item.Suggestion.Title)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -45,3 +45,7 @@
 }
     </tbody>
 </table>
+<td>
+    <a asp-controller="Suggestions" asp-action="Index">Back to Suggestions</a>
+</td>
+
