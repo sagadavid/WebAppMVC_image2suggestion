@@ -18,6 +18,7 @@ namespace image2suggestion.Models
         [DisplayName("Upload Photo")]
         public IFormFile PhotoInIForm { get; set; }
 
+        //?[DisplayName("Photo belongs to")]
         public int SuggestionID { get; set; }
         public Suggestion Suggestion { get; set; }
 

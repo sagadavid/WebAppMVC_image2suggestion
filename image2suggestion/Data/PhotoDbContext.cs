@@ -19,9 +19,9 @@ namespace image2suggestion.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Photo>()
-                .HasOne<Suggestion>(p=>p.Suggestion)
-                .WithMany(p=>p.Photos)
-                .HasForeignKey(p=>p.SuggestionID)
+                .HasOne<Suggestion>(s=>s.Suggestion)
+                .WithMany(s=>s.Photos)
+                .HasForeignKey(s => s.SuggestionID)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
