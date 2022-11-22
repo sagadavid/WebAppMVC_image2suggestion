@@ -51,7 +51,7 @@ namespace image2suggestion.Controllers
         // GET: Photos/Create
         public IActionResult Create()
         {
-            ViewData["SuggestionID"] = new SelectList(_context.Suggestion, "Id", "Description");
+            ViewData["SuggestionID"] = new SelectList(_context.Suggestion, "Id", "Title");
             return View();
         }
 
@@ -64,24 +64,28 @@ namespace image2suggestion.Controllers
         {
             if (ModelState.IsValid)
             {
+          
                 //save image to wwwroot/image
                 string wwwRootPath = _hostEnvironment.WebRootPath;
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
                 string fileName = Path.GetFileNameWithoutExtension(photo.PhotoInIForm.FileName);
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
                 string fileExtension = Path.GetExtension(photo.PhotoInIForm.FileName);
-                photo.Title = fileName = DateTime.Now.ToString("yyyyMddHHmmss_") + fileName + fileExtension;
-                string path = Path.Combine(wwwRootPath + "/Image/" + fileName);
-
+                photo.Title = fileName = DateTime.Now.ToString("yyyyMddHHmmss_") +  fileName + fileExtension;
+                 string path = Path.Combine(wwwRootPath + "/Image/" + fileName);
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
                     await photo.PhotoInIForm.CopyToAsync(fileStream);
                   
                 }
 
+                //photo.PhotoPath = photo.Title;
+                //ViewBag.PhotoPath = photo.PhotoPath;
+                
+          
                 //using (var memoryStream = new MemoryStream())
                 //{
-                 
+
                 //    await photo.PhotoInIForm.CopyToAsync(memoryStream);
                 //    photo.PhotoInBytes = memoryStream.ToArray();//need to save as kb?
                 //    var convLong = BitConverter.ToInt64(photo.PhotoInBytes, 0);
@@ -96,9 +100,10 @@ namespace image2suggestion.Controllers
                 //insert record
                 _context.Add(photo);
                 await _context.SaveChangesAsync();
+             
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SuggestionID"] = new SelectList(_context.Suggestion, "Id", "Description", photo.SuggestionID);
+            ViewData["SuggestionID"] = new SelectList(_context.Suggestion, "Id", "Title", photo.SuggestionID);
             return View(photo);
         }
 
@@ -115,7 +120,7 @@ namespace image2suggestion.Controllers
             {
                 return NotFound();
             }
-            ViewData["SuggestionID"] = new SelectList(_context.Suggestion, "Id", "Description", photo.SuggestionID);
+            ViewData["SuggestionID"] = new SelectList(_context.Suggestion, "Id", "Title", photo.SuggestionID);
             return View(photo);
         }
 
@@ -151,7 +156,7 @@ namespace image2suggestion.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SuggestionID"] = new SelectList(_context.Suggestion, "Id", "Description", photo.SuggestionID);
+            ViewData["SuggestionID"] = new SelectList(_context.Suggestion, "Id", "Title", photo.SuggestionID);
             return View(photo);
         }
 

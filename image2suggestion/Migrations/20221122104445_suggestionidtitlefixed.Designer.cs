@@ -12,8 +12,8 @@ using image2suggestion.Data;
 namespace image2suggestion.Migrations
 {
     [DbContext(typeof(PhotoDbContext))]
-    [Migration("20221120200417_allset")]
-    partial class allset
+    [Migration("20221122104445_suggestionidtitlefixed")]
+    partial class suggestionidtitlefixed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

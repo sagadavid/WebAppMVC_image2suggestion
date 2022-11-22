@@ -27,6 +27,7 @@
                 <select asp-for="SuggestionID" class ="form-control" asp-items="ViewBag.SuggestionID">
                     <option value="">photo belongs to ...</option>
                 </select>
+                <span asp-validation-for="SuggestionID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PhotoInIForm" class="control-label"></label>

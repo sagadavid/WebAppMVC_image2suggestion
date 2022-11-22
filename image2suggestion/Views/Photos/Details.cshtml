@@ -26,10 +26,10 @@
             @Html.DisplayNameFor(model => model.Suggestion)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Suggestion.Description)
+            @Html.DisplayFor(model => model.Suggestion.Title)
         </dd>
         <dd class="col-sm-10">
-            <img src="@("~/image/"+Model.Title)" asp-append-version="true" width="300px" height="250px" />
+         <img src="@("~/image/"+Model.Title)" asp-append-version="true" width="300px" height="250px" />
         </dd>
     </dl>
 </div>

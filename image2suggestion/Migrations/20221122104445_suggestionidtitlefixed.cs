@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace image2suggestion.Migrations
 {
-    public partial class photosizingindetailspage : Migration
+    public partial class suggestionidtitlefixed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

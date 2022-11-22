@@ -17,5 +17,6 @@ namespace image2suggestion.Models
         public string Description { get; set; }
 
         public ICollection<Photo> Photos { get; set; } = new HashSet<Photo>();
+
     }
 }
