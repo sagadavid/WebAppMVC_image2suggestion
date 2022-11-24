@@ -33,6 +33,7 @@ namespace image2suggestion.Controllers
                 return NotFound();
             }
 
+            var pathetic = ViewData["Pathway"];
             var suggestion = await _context.Suggestion
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (suggestion == null)

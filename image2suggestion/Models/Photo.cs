@@ -13,7 +13,10 @@ namespace image2suggestion.Models
         //[Required(ErrorMessage = "title your photo")]
         [Column(TypeName = "nvarchar(50)")]
         public string Title { get; set; }
-       
+
+        [Column(TypeName = "nvarchar(50)")]
+        public string PhotoName { get; set; }
+
         [NotMapped]
         [DisplayName("Upload Photo")]
         public IFormFile PhotoInIForm { get; set; }

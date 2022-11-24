@@ -61,7 +61,7 @@ namespace image2suggestion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,PhotoInIForm, SuggestionID")] Photo photo)
+        public async Task<IActionResult> Create([Bind("Id,Title, PhotoName,PhotoInIForm, SuggestionID")] Photo photo)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace image2suggestion.Controllers
                 string fileName = Path.GetFileNameWithoutExtension(photo.PhotoInIForm.FileName);
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
                 string fileExtension = Path.GetExtension(photo.PhotoInIForm.FileName);
-                photo.Title=fileName = DateTime.Now.ToString("yyyyMddHHmmss_") +  fileName + fileExtension;
+                photo.Title=fileName = photo.PhotoName+DateTime.Now.ToString("_yyyyMddHHmmss_") + fileName + fileExtension;
                  string path = Path.Combine(wwwRootPath + "/Image/" + fileName);
                
                 using (var fileStream = new FileStream(path, FileMode.Create))
@@ -81,7 +81,7 @@ namespace image2suggestion.Controllers
                   
                 }
 
-                 ViewData["Pathway"] = fileName;
+                 //ViewData["Pathway"] = path;
           
                 //using (var memoryStream = new MemoryStream())
                 //{
@@ -129,7 +129,7 @@ namespace image2suggestion.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,PhotoInBytes,SuggestionID")] Photo photo)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,PhotoName, PhotoInBytes,SuggestionID")] Photo photo)
         {
             if (id != photo.Id)
             {
@@ -196,6 +196,7 @@ namespace image2suggestion.Controllers
 
             //delete image from wwwroot/image folder
             var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "image", photo.Title);
+            //var imagePath = Path.Combine(wwwRootPath + "/Image/" + fileName);
             if (System.IO.File.Exists(imagePath))
                 System.IO.File.Delete(imagePath);
             //delete the record

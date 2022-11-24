@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace image2suggestion.Migrations
 {
-    public partial class suggestionidtitlefixed : Migration
+    public partial class titlenamefixing : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -175,6 +175,7 @@ namespace image2suggestion.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    PhotoName = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     SuggestionID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

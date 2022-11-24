@@ -12,8 +12,8 @@ using image2suggestion.Data;
 namespace image2suggestion.Migrations
 {
     [DbContext(typeof(PhotoDbContext))]
-    [Migration("20221122104445_suggestionidtitlefixed")]
-    partial class suggestionidtitlefixed
+    [Migration("20221124134823_titlenamefixing")]
+    partial class titlenamefixing
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,6 +31,9 @@ namespace image2suggestion.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("PhotoName")
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("SuggestionID")
                         .HasColumnType("int");

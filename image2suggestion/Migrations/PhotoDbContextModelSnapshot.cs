@@ -30,6 +30,9 @@ namespace image2suggestion.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("PhotoName")
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<int>("SuggestionID")
                         .HasColumnType("int");
 
