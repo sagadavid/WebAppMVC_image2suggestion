@@ -22,12 +22,13 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
-        @*<dd class="col-sm-10">
+        <dd class="col-sm-10">
+            @foreach (var item in Model.Photos)
+            {
+                <img src="@("~/image/"+ item.Title)" asp-append-version="true" width="300px" height="250px" />
+            }
 
-            <img src="@("~/image/"+ViewData["Pathway"])" asp-append-version="true" width="300px" height="250px" />
-            <img src="@("~/image/"+Model.Title)" asp-append-version="true" width="300px" height="250px" />
-
-        </dd>*@
+        </dd>
         <a asp-controller="Photos" asp-action="Index">Check Photo</a>
     </dl>
 </div>

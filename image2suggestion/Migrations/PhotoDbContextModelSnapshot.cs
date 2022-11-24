@@ -276,7 +276,7 @@ namespace image2suggestion.Migrations
                     b.HasOne("image2suggestion.Models.Suggestion", "Suggestion")
                         .WithMany("Photos")
                         .HasForeignKey("SuggestionID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Suggestion");

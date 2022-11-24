@@ -73,7 +73,8 @@ namespace image2suggestion.Controllers
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
                 string fileExtension = Path.GetExtension(photo.PhotoInIForm.FileName);
                 photo.Title=fileName = photo.PhotoName+DateTime.Now.ToString("_yyyyMddHHmmss_") + fileName + fileExtension;
-                 string path = Path.Combine(wwwRootPath + "/Image/" + fileName);
+                ViewBag.PhotoBag = photo;
+                string path = Path.Combine(wwwRootPath + "/Image/" + fileName);
                
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -103,6 +104,11 @@ namespace image2suggestion.Controllers
              
                 return RedirectToAction(nameof(Index));
             }
+            
+            //    var pato= Path.Combine(_hostEnvironment.WebRootPath, "image", photo.Title);
+            //TempData["patti"] = pato;
+            //TempData.Keep("patti");
+
             ViewData["SuggestionID"] = new SelectList(_context.Suggestion, "Id", "Title", photo.SuggestionID);
             return View(photo);
         }

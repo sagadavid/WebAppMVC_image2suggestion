@@ -22,7 +22,7 @@ namespace image2suggestion.Data
                 .HasOne<Suggestion>(s=>s.Suggestion)
                 .WithMany(s=>s.Photos)
                 .HasForeignKey(s => s.SuggestionID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 
